@@ -1,7 +1,0 @@
-PORT= # Port number for the server
-WOO_WEBHOOK_SECRET= # Your WooCommerce Webhook Secret
-ZOHO_CLIENT_ID= # Your Zoho Client ID
-ZOHO_CLIENT_SECRET= # Your Zoho Client Secret
-ZOHO_REFRESH_TOKEN= # Your Zoho Refresh Token
-ZOHO_ACCOUNTS_URL=https://accounts.zoho.com
-ZOHO_API_BASE=https://www.zohoapis.com/crm/v9
