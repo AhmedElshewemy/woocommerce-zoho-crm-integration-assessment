@@ -2,6 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const crypto = require('crypto');
 const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
 
@@ -81,6 +83,25 @@ async function createDeal(body, token) {
   return resp.data;
 }
 
+// Add basic input validation
+function validateOrderPayload(payload) {
+  if (!payload.id || !payload.billing) {
+    throw new Error('Invalid order payload structure');
+  }
+  return true;
+}
+
+// Add after requires
+function writeLog(orderId, payload, result) {
+  const logDir = path.join(__dirname, 'logs');
+  if (!fs.existsSync(logDir)) {
+    fs.mkdirSync(logDir);
+  }
+  const logFile = path.join(logDir, `order-${orderId}-${Date.now()}.json`);
+  fs.writeFileSync(logFile, JSON.stringify({ payload, result }, null, 2));
+  return logFile;
+}
+
 // ======================
 //  WEBHOOK ENDPOINT
 // ======================
@@ -95,6 +116,8 @@ app.post('/webhook', express.raw({ type: '*/*' }), async (req, res) => {
     }
 
     const payload = JSON.parse(req.body.toString('utf8'));
+    validateOrderPayload(payload); // Validate payload structure
+
     const orderId = payload.id;
     const billing = payload.billing || {};
     const email = billing.email;
