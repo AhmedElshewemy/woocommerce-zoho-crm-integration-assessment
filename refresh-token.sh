@@ -4,8 +4,27 @@
 # and update .env file
 # ================================
 
+# Check for jq dependency
+if ! command -v jq &> /dev/null; then
+    echo "❌ Error: jq is required but not installed."
+    echo "Install with: sudo apt install jq"
+    exit 1
+fi
+
 # Load environment variables
+if [ ! -f .env ]; then
+    echo "❌ Error: .env file not found!"
+    exit 1
+fi
 source .env
+
+# Validate required variables
+for var in ZOHO_REFRESH_TOKEN ZOHO_CLIENT_ID ZOHO_CLIENT_SECRET ZOHO_ACCOUNTS_URL; do
+    if [ -z "${!var}" ]; then
+        echo "❌ Error: $var is not set in .env"
+        exit 1
+    fi
+done
 
 # Request new access token
 RESPONSE=$(curl -s -X POST "$ZOHO_ACCOUNTS_URL/oauth/v2/token" \
@@ -32,5 +51,8 @@ else
   echo "ZOHO_ACCESS_TOKEN=$ACCESS_TOKEN" >> .env
 fi
 
+# Add timestamp to the token
+echo "# Last updated: $(date)" >> .env
+
 echo "✅ Updated .env with new access token"
-echo "Please restart your server to use the new token."
+echo "🔄 Please restart your server to use the new token."
