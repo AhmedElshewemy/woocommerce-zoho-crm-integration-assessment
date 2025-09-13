@@ -13,17 +13,6 @@ It demonstrates how to integrate **WooCommerce** with **Zoho CRM** using:
 
 ---
 
-## 🎯 Learning Outcomes (from the assessment)
-By completing this project, you learn:
-- How to consume **REST APIs** in Node.js
-- How to use **OAuth2** (refresh tokens) with Zoho CRM
-- How to perform **data mapping** between WooCommerce orders and Zoho CRM modules
-- How to work with Zoho CRM modules: **Contacts** and **Deals**
-- How to test locally using **LocalWP**, ngrok, and Postman
-- How to extend CRM using **Deluge scripting**
-
----
-
 ## ⚙️ Features
 - 📦 Captures **WooCommerce order webhooks**
 - 🔒 Verifies WooCommerce **HMAC signatures**
