@@ -71,6 +71,22 @@ ZOHO_ACCOUNTS_URL=https://accounts.zoho.com
 ZOHO_API_BASE=https://www.zohoapis.com/crm/v9
 ````
 
+### 4. Refresh Token Management
+The project includes a helper script `refresh-token.sh` to manage Zoho CRM access tokens:
+
+```bash
+# Get initial access token
+chmod +x refresh-token.sh
+./refresh-token.sh
+```
+
+This script will:
+- Request a new access token using your refresh token
+- Automatically update `.env` with the new token
+- Show success/error messages for debugging
+
+> Note: Run this script if you get authentication errors from Zoho CRM.
+
 ## 🧪 Testing
 1. Start your local WordPress + WooCommerce
 2. Start ngrok: `ngrok http 3000`

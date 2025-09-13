@@ -170,6 +170,26 @@ app.post('/webhook', express.raw({ type: '*/*' }), async (req, res) => {
   }
 });
 
+// Add after CONFIG section
+// Validate required environment variables
+const requiredEnvVars = [
+  'WOO_WEBHOOK_SECRET',
+  'ZOHO_CLIENT_ID',
+  'ZOHO_CLIENT_SECRET',
+  'ZOHO_REFRESH_TOKEN'
+];
+
+for (const envVar of requiredEnvVars) {
+  if (!process.env[envVar]) {
+    console.error(`❌ Missing required environment variable: ${envVar}`);
+    process.exit(1);
+  }
+}
+
 app.listen(PORT, () => {
   console.log(`🚀 Webhook listener running on port ${PORT}`);
+  console.log('Environment: ', {
+    ZOHO_ACCOUNTS: ZOHO_ACCOUNTS,
+    ZOHO_API_BASE: ZOHO_API_BASE
+  });
 });
